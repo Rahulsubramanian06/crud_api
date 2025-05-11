@@ -1,21 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-
 export function App() {
   const [users, setUsers] = useState<any[]>([])
   const [name, setName] = useState("")
   const [editId, setEditId] = useState<number | null>(null)
-
   // READ
   const fetchUsers = async () => {
     const response = await axios.get('https://jsonplaceholder.typicode.com/users')
     setUsers(response.data)
   }
-
   useEffect(() => {
     fetchUsers()
   }, [])
-
   // CREATE
   const addUser = async () => {
     if (!name) return
@@ -23,7 +19,6 @@ export function App() {
     setUsers([...users, response.data])
     setName("")
   }
-
   // UPDATE
   const updateUser = async () => {
     if (!name || editId === null) return
@@ -32,13 +27,11 @@ export function App() {
     setName("")
     setEditId(null)
   }
-
   // DELETE
   const deleteUser = async (id: number) => {
     await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
     setUsers(users.filter(user => user.id !== id))
   }
-
   return (
     <div className="container mt-4">
       <h2>CRUD with Axios</h2>
@@ -53,7 +46,6 @@ export function App() {
           {editId ? "Update" : "Add"}
         </button>
       </div>
-
       <ul className="list-group">
         {users.map(user => (
           <li key={user.id} className="list-group-item d-flex justify-content-between align-items-center">
